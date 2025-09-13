@@ -14,7 +14,6 @@ export interface NavGroup {
     title: string;
     items: NavItem[];
 }
-
 export interface NavItem {
     title: string;
     href: NonNullable<InertiaLinkProps['href']>;
@@ -28,6 +27,7 @@ export interface SharedData {
     auth: Auth;
     sidebarOpen: boolean;
     [key: string]: unknown;
+    flash: IFlash;
 }
 
 export interface User {
@@ -39,4 +39,16 @@ export interface User {
     created_at: string;
     updated_at: string;
     [key: string]: unknown; // This allows for additional properties...
+}
+
+export interface INetwork {
+    id: number;
+    quality_score: number;
+    location: string;
+}
+
+export interface IFlash {
+    message: string;
+    success: string;
+    error: string;
 }

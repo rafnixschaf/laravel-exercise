@@ -1,88 +1,101 @@
 import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/AuthenticatedSessionController';
-import InputError from '@/components/input-error';
-import TextLink from '@/components/text-link';
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import AuthLayout from '@/layouts/auth-layout';
-import { register } from '@/routes';
-import { request } from '@/routes/password';
-import { Form, Head } from '@inertiajs/react';
-import { LoaderCircle } from 'lucide-react';
+import { Form } from '@inertiajs/react';
 
-interface LoginProps {
+import { MyAuthLayout } from '@/layouts/MyAuthLayout';
+import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { Alert, Box, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material';
+import Link from '@mui/material/Link';
+import Tooltip from '@mui/material/Tooltip';
+
+interface ILogin {
     status?: string;
-    canResetPassword: boolean;
 }
-
-export default function Login({ status, canResetPassword }: LoginProps) {
+export default function login({ status }: ILogin) {
     return (
-        <AuthLayout title="Log in to your account" description="Enter your email and password below to log in">
-            <Head title="Log in" />
-
-            <Form {...AuthenticatedSessionController.store.form()} resetOnSuccess={['password']} className="flex flex-col gap-6">
-                {({ processing, errors }) => (
-                    <>
-                        <div className="grid gap-6">
-                            <div className="grid gap-2">
-                                <Label htmlFor="email">Email address</Label>
-                                <Input
+        <MyAuthLayout>
+            <Paper elevation={3} sx={{ p: 3, borderRadius: 2 }}>
+                <Form {...AuthenticatedSessionController.store.form()} resetOnSuccess={['password']}>
+                    {({ processing, errors }) => (
+                        <Box display="flex" flexDirection="column" gap={2}>
+                            <Box>
+                                <TextField
                                     id="email"
-                                    type="email"
                                     name="email"
-                                    required
-                                    autoFocus
-                                    tabIndex={1}
-                                    autoComplete="email"
+                                    type="email"
+                                    label="Email address"
                                     placeholder="email@example.com"
+                                    autoComplete="email"
+                                    autoFocus
+                                    fullWidth
+                                    tabIndex={1}
+                                    error={Boolean(errors.email)}
+                                    helperText={errors.email}
+                                    margin="normal"
                                 />
-                                <InputError message={errors.email} />
-                            </div>
+                            </Box>
 
-                            <div className="grid gap-2">
-                                <div className="flex items-center">
-                                    <Label htmlFor="password">Password</Label>
-                                    {canResetPassword && (
-                                        <TextLink href={request()} className="ml-auto text-sm" tabIndex={5}>
-                                            Forgot password?
-                                        </TextLink>
-                                    )}
-                                </div>
-                                <Input
+                            <Box>
+                                <Box display="flex" alignItems="center">
+                                    <Typography component="label" htmlFor="password" sx={{ fontSize: 14, fontWeight: 500 }}>
+                                        Password
+                                    </Typography>
+
+                                    <Tooltip title="Disabled in this demo">
+                                        <span style={{ marginLeft: 'auto' }}>
+                                            <Link
+                                                style={{ pointerEvents: 'none' }}
+                                                sx={{ fontSize: 14 }}
+                                                tabIndex={5}
+                                                underline="hover"
+                                                color={'secondary'}
+                                            >
+                                                Forgot password?
+                                            </Link>
+                                        </span>
+                                    </Tooltip>
+                                </Box>
+
+                                <TextField
                                     id="password"
-                                    type="password"
                                     name="password"
-                                    required
-                                    tabIndex={2}
-                                    autoComplete="current-password"
+                                    type="password"
+                                    label="Password"
                                     placeholder="Password"
+                                    autoComplete="current-password"
+                                    fullWidth
+                                    tabIndex={2}
+                                    error={Boolean(errors.password)}
+                                    helperText={errors.password}
+                                    margin="normal"
                                 />
-                                <InputError message={errors.password} />
-                            </div>
+                            </Box>
 
-                            <div className="flex items-center space-x-3">
-                                <Checkbox id="remember" name="remember" tabIndex={3} />
-                                <Label htmlFor="remember">Remember me</Label>
-                            </div>
+                            <FormControlLabel control={<Checkbox id="remember" name="remember" tabIndex={3} />} label="Remember me" />
 
-                            <Button type="submit" className="mt-4 w-full" tabIndex={4} disabled={processing}>
-                                {processing && <LoaderCircle className="h-4 w-4 animate-spin" />}
+                            <MyButton type="submit" fullWidth variant="contained" loading={processing} tabIndex={4} sx={{ mt: 1 }}>
                                 Log in
-                            </Button>
-                        </div>
+                            </MyButton>
 
-                        <div className="text-center text-sm text-muted-foreground">
-                            Don't have an account?{' '}
-                            <TextLink href={register()} tabIndex={5}>
-                                Sign up
-                            </TextLink>
-                        </div>
-                    </>
+                            <Typography variant="body2" color="text.secondary" textAlign="center" sx={{ mt: 1 }}>
+                                Don&apos;t have an account?&nbsp;
+                                <Tooltip title="Disabled in this demo">
+                                    <span>
+                                        <Link tabIndex={5} underline="hover" color={'secondary'} style={{ pointerEvents: 'none' }}>
+                                            Sign up
+                                        </Link>
+                                    </span>
+                                </Tooltip>
+                            </Typography>
+                        </Box>
+                    )}
+                </Form>
+
+                {status && (
+                    <Alert severity="success" sx={{ mt: 2, textAlign: 'center' }}>
+                        {status}
+                    </Alert>
                 )}
-            </Form>
-
-            {status && <div className="mb-4 text-center text-sm font-medium text-green-600">{status}</div>}
-        </AuthLayout>
+            </Paper>
+        </MyAuthLayout>
     );
 }
