@@ -4,6 +4,8 @@ import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { useForm } from '@inertiajs/react';
 import { useContext, useState } from 'react';
+import networkController from '@/actions/App/Http/Controllers/NetworkController';
+import networkBulkController from '@/actions/App/Http/Controllers/NetworkBulkController';
 
 interface IUseNetworkTable {
     setSelected: (select: number[]) => void;
@@ -18,7 +20,7 @@ export const useNetworkTableToolbar = ({ ...props }: IUseNetworkTable) => {
     const handleDelete = (ids: readonly number[]): void => {
         setIsLoading(true);
         transform(() => ({ ids }));
-        formDelete('/networks', {
+        formDelete(networkBulkController.destroy().url, {
             onSuccess: (response) => {
                 props.setSelected([]);
                 setOpen(false);

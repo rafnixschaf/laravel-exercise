@@ -4,7 +4,7 @@ import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper
 import { INetworkStatus } from '@/stories/atoms/NetworkStatus/NetworkStatus';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { useForm } from '@inertiajs/react';
-import { ForwardedRef, useImperativeHandle, useRef } from 'react';
+import { ForwardedRef, useImperativeHandle, useRef, useState } from 'react';
 import { useFormBasic } from '@/stories/molecules/forms/hooks/formBasicHook';
 import { IFormRef } from '@/types/IFormRef';
 import networkController from '@/actions/App/Http/Controllers/NetworkController';
@@ -18,12 +18,13 @@ export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) 
     const { errors, post, setData, transform, data, clearErrors, resetAndClearErrors,  } = useForm({
         location: '',
         quality_score: 0,
-    },
+    },);
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    );
     const networkRef = useRef<INetworkStatus>(null);
 
     const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        setIsLoading(true);
         e.preventDefault();
 
         const speed = networkRef.current?.getSpeed() || 0;
@@ -46,6 +47,7 @@ export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) 
             onError: (e) => {
                 globalDispatch({ type: SET_STATUS_MESSAGE, payload: { message: getMessagesFromInertia(e), type: ERROR_STATUS } });
             },
+            onFinish: () => setIsLoading(false),
         });
     };
 
@@ -60,5 +62,6 @@ export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) 
         networkRef,
         setData,
         data,
+        isLoading,
     };
 };
