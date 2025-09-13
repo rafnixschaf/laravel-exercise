@@ -14,7 +14,7 @@ interface INetworkPage {
 export default function Network({ networks }: INetworkPage) {
     const [openNetworkModal, setOpenNetworkModal] = useState(false);
     const [openReportModal, setOpenReportModal] = useState(false);
-    const { submit } = useGenerateReportForm({});
+    const { submit } = useGenerateReportForm({onSuccess: () => setOpenReportModal(false)});
 
     return (
         <MyAppLayout>

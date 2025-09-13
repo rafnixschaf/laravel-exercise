@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\ReportGenerated;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -23,6 +24,8 @@ class ReportController extends Controller {
         $network_ids = $user->networks()->pluck('id');
 
         $report->networks()->sync($network_ids);
+
+        ReportGenerated::dispatch($report);
 
         return back()->with('success', 'Report created successfully.');
     }
