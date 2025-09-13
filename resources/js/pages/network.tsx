@@ -1,5 +1,7 @@
 import { MyAppLayout } from '@/layouts/app/AppLayout/MyAppLayout';
 import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { useGenerateReportForm } from '@/stories/molecules/forms/hooks/generateReportFormHook';
+import { ConfirmationModal } from '@/stories/molecules/modals/ConfirmationModal/ConfirmationModal';
 import { NetworkModal } from '@/stories/molecules/modals/NetworkModal/NetworkModal';
 import { NetworkTable } from '@/stories/molecules/NetworkTable/NetworkTable';
 import { INetwork } from '@/types';
@@ -12,7 +14,7 @@ interface INetworkPage {
 export default function Network({ networks }: INetworkPage) {
     const [openNetworkModal, setOpenNetworkModal] = useState(false);
     const [openReportModal, setOpenReportModal] = useState(false);
-
+    const { submit } = useGenerateReportForm({});
 
     return (
         <MyAppLayout>
@@ -26,9 +28,16 @@ export default function Network({ networks }: INetworkPage) {
                     <NetworkTable data={networks} />
                 </Grid>
 
-                    <NetworkModal open={openNetworkModal} setOpen={setOpenNetworkModal} />
-                
-
+                <NetworkModal open={openNetworkModal} setOpen={setOpenNetworkModal} />
+                <ConfirmationModal
+                    open={openReportModal}
+                    setOpen={setOpenReportModal}
+                    handleConfirm={submit}
+                    content={'By confirming, a report will be generated from your entries and sent to your email.'}
+                    handleCancel={() => {
+                        setOpenReportModal(false);
+                    }}
+                ></ConfirmationModal>
             </Grid>
         </MyAppLayout>
     );

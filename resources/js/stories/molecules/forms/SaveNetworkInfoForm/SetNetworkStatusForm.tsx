@@ -1,22 +1,14 @@
 import { MyButton } from '@/stories/atoms/Button/MyButton';
 import { NetworkStatus } from '@/stories/atoms/NetworkStatus/NetworkStatus';
 import { useSetNetworkStatusForm } from '@/stories/molecules/forms/SaveNetworkInfoForm/setNetworkStatusFormHook';
-import { style } from '@/stories/molecules/forms/SaveNetworkInfoForm/style';
+import { style } from '@/stories/molecules/forms/style/style';
 import { FormControl, Grid, Stack, TextField } from '@mui/material';
 import Box from '@mui/material/Box';
+import { IForm } from '@/types/IForm';
 
 
-export interface ISetNetworkInfoForm {
-    onSave: () => void;
-    // need a custom property because react expects a html element
-    formRef?: React.Ref<ISetNetworkStatusFormRef>
-}
 
-export interface ISetNetworkStatusFormRef {
-    handleClose: () => void;
-
-}
-export const SetNetworkStatusForm = ({ ...props }: ISetNetworkInfoForm) => {
+export const SetNetworkStatusForm = ({ ...props }: IForm) => {
     const { errors, submit, networkRef, setData, data } = useSetNetworkStatusForm({onSuccess: props.onSave, ref: props.formRef});
 
     return (

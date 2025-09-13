@@ -22,7 +22,7 @@ class NetworkController extends Controller
 
         $request->user()->networks()->create($validated);
 
-        return back()->with('success', 'Network added successfully.');
+        return back()->with('success', 'Network status added successfully.');
     }
 
 }

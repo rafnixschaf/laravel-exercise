@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
         // User::factory(10)->create();
 
         User::factory()
-            ->hasNetwork(10)
+            ->hasNetworks(10)
             ->create([
                 'name' => 'Test User',
                 'email' => 'test@example.com',

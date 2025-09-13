@@ -6,7 +6,7 @@ import { Box, Grid, Stack, Typography } from '@mui/material';
 interface IConfirmationModal {
     open: boolean;
     setOpen: (open: boolean) => void;
-    handleConfirm: () => void;
+    handleConfirm: (e: React.MouseEvent<HTMLButtonElement>) => void;
     handleCancel: () => void;
     content?: string;
     cancelLabel?: string;
@@ -22,7 +22,7 @@ export const ConfirmationModal = ({
         <MyModal open={props.open} setOpen={props.setOpen}>
             <Box sx={style}>
                 <Grid container spacing={2} flexDirection="column" width="100%">
-                    <Typography variant="h5" gutterBottom textAlign="center" mb={4}>
+                    <Typography variant="h5" gutterBottom  mb={4}>
                         {content}
                     </Typography>
                     <Stack direction="row" justifyContent={'flex-end'} spacing={2}>

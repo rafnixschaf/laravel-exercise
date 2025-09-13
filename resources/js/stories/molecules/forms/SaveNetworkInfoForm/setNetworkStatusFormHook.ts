@@ -1,18 +1,20 @@
 import { GlobalDispatchContext } from '@/context/GlobalContext';
 import { SET_STATUS_MESSAGE } from '@/context/globalContextReducer';
-import { getMessagesFromInertia } from '@/helper/getMessagesFromInertia';
+import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper/getMessagesFromInertia';
 import { INetworkStatus } from '@/stories/atoms/NetworkStatus/NetworkStatus';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { useForm } from '@inertiajs/react';
-import { ForwardedRef, useContext, useImperativeHandle, useRef } from 'react';
-import { ISetNetworkStatusFormRef } from '@/stories/molecules/forms/SaveNetworkInfoForm/SetNetworkStatusForm';
+import { ForwardedRef, useImperativeHandle, useRef } from 'react';
+import { useFormBasic } from '@/stories/molecules/forms/hooks/formBasicHook';
+import { IFormRef } from '@/types/IFormRef';
+import networkController from '@/actions/App/Http/Controllers/NetworkController';
 
 interface IUseSetNetworkStatusForm {
     onSuccess?: () => void;
-    ref?: ForwardedRef<ISetNetworkStatusFormRef>;
+    ref?: ForwardedRef<IFormRef>;
 }
 export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) => {
-    const globalDispatch = useContext(GlobalDispatchContext);
+    const {globalDispatch} = useFormBasic();
     const { errors, post, setData, transform, data, clearErrors, resetAndClearErrors,  } = useForm({
         location: '',
         quality_score: 0,
@@ -29,8 +31,8 @@ export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) 
         // we need to transform the data before submitting, because setData is an asynchronous function
         transform((data) => ({ ...data, quality_score: speed }));
 
-        post('/network', {
-            onSuccess: () => {
+        post(networkController.store().url, {
+            onSuccess: (data) => {
                 resetAndClearErrors();
                 /**
                  * no idea what the reset function does, if we do not manually reset the data to the original state,
@@ -38,7 +40,7 @@ export const useSetNetworkStatusForm = ({ ...props }: IUseSetNetworkStatusForm) 
                  */
                 setData({ location: '', quality_score: 0 });
 
-                globalDispatch({ type: SET_STATUS_MESSAGE, payload: { message: 'Network status saved', type: SUCCESS_STATUS } });
+                globalDispatch({ type: SET_STATUS_MESSAGE, payload: { message: getMessagesFromInertiaResponse(data), type: SUCCESS_STATUS } });
                 if (props.onSuccess) props.onSuccess();
             },
             onError: (e) => {

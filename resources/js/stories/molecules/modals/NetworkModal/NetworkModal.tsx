@@ -1,16 +1,16 @@
 import {
-    ISetNetworkStatusFormRef,
     SetNetworkStatusForm,
 } from '@/stories/molecules/forms/SaveNetworkInfoForm/SetNetworkStatusForm';
 import { MyModal } from '@/stories/molecules/modals/MyModal/MyModal';
 import { useRef } from 'react';
+import { IFormRef } from '@/types/IFormRef';
 
 interface INetworkModal {
     open: boolean;
     setOpen: (open: boolean) => void;
 }
 export const NetworkModal = ({ ...props }: INetworkModal) => {
-    const formRef = useRef<ISetNetworkStatusFormRef>(null);
+    const formRef = useRef<IFormRef>(null);
 
     const handleClose = () => {
         props.setOpen(false)
