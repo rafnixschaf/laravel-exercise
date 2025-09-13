@@ -2,6 +2,7 @@ import { MyButton } from '@/stories/atoms/Button/MyButton';
 import { style } from '@/stories/molecules/modals/ConfirmationModal/style';
 import { MyModal } from '@/stories/molecules/modals/MyModal/MyModal';
 import { Box, Grid, Stack, Typography } from '@mui/material';
+import { LoadingIndicator } from '@/stories/atoms/LoadingIndicator/LoadingIndicator';
 
 interface IConfirmationModal {
     open: boolean;
@@ -11,6 +12,7 @@ interface IConfirmationModal {
     content?: string;
     cancelLabel?: string;
     confirmLabel?: string;
+    isLoading?: boolean;
 }
 export const ConfirmationModal = ({
     content = 'Are you sure you want to delete the data?',
@@ -26,11 +28,13 @@ export const ConfirmationModal = ({
                         {content}
                     </Typography>
                     <Stack direction="row" justifyContent={'flex-end'} spacing={2}>
+                        <LoadingIndicator isLoading={props.isLoading}/>
                         <MyButton color={'cancel'} onClick={props.handleCancel}>
                             {cancelLabel}
                         </MyButton>
                         <MyButton onClick={props.handleConfirm}>{confirmLabel}</MyButton>
                     </Stack>
+
                 </Grid>
             </Box>
         </MyModal>

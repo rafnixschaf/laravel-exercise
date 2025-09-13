@@ -3,7 +3,7 @@ import { MyButton } from '@/stories/atoms/Button/MyButton';
 import { useGenerateReportForm } from '@/stories/molecules/forms/hooks/generateReportFormHook';
 import { ConfirmationModal } from '@/stories/molecules/modals/ConfirmationModal/ConfirmationModal';
 import { NetworkModal } from '@/stories/molecules/modals/NetworkModal/NetworkModal';
-import { NetworkTable } from '@/stories/molecules/NetworkTable/NetworkTable';
+import { NetworkTable } from '@/stories/molecules/tables/NetworkTable/NetworkTable';
 import { INetwork } from '@/types';
 import { Grid } from '@mui/material';
 import { useState } from 'react';
@@ -14,7 +14,7 @@ interface INetworkPage {
 export default function Network({ networks }: INetworkPage) {
     const [openNetworkModal, setOpenNetworkModal] = useState(false);
     const [openReportModal, setOpenReportModal] = useState(false);
-    const { submit } = useGenerateReportForm({onSuccess: () => setOpenReportModal(false)});
+    const { submit, isLoading: isReportFormLoading } = useGenerateReportForm({onSuccess: () => setOpenReportModal(false)});
 
     return (
         <MyAppLayout>
@@ -37,6 +37,7 @@ export default function Network({ networks }: INetworkPage) {
                     handleCancel={() => {
                         setOpenReportModal(false);
                     }}
+                    isLoading={isReportFormLoading}
                 ></ConfirmationModal>
             </Grid>
         </MyAppLayout>

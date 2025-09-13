@@ -4,7 +4,7 @@ import reportController from '@/actions/App/Http/Controllers/ReportController';
 import { SET_STATUS_MESSAGE } from '@/context/globalContextReducer';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper/getMessagesFromInertia';
-import { ForwardedRef } from 'react';
+import { ForwardedRef, useState } from 'react';
 import { IFormRef } from '@/types/IFormRef';
 
 interface IUseGenerateReportModalForm {
@@ -14,9 +14,13 @@ interface IUseGenerateReportModalForm {
 export const useGenerateReportForm = ({...props}:IUseGenerateReportModalForm) => {
     const {globalDispatch} = useFormBasic();
     const {post} = useForm()
+    const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const submit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        setIsLoading(true);
         e.preventDefault();
+        //@TODO temporary fix
+        (e.currentTarget as HTMLButtonElement).blur();
 
         post(reportController.store().url, {
             onSuccess: (data) => {
@@ -25,11 +29,13 @@ export const useGenerateReportForm = ({...props}:IUseGenerateReportModalForm) =>
             },
             onError: (e) => {
                 globalDispatch({type: SET_STATUS_MESSAGE, payload: {message: getMessagesFromInertia(e), type: ERROR_STATUS}})
-            }
+            },
+            onFinish: () => setIsLoading(false),
         })
     }
 
     return {
         submit,
+        isLoading,
     }
 };
