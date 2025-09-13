@@ -6,7 +6,7 @@ import Tooltip from '@mui/material/Tooltip';
 import Typography from '@mui/material/Typography';
 
 import { ConfirmationModal } from '@/stories/molecules/modals/ConfirmationModal/ConfirmationModal';
-import { useNetworkTable } from '@/stories/molecules/NetworkTable/networkTableHook';
+import { useNetworkTableToolbar } from '@/stories/molecules/tables/NetworkTable/hooks/networkTableToolbarHook';
 
 interface INetworkTableToolbar {
     selected: readonly number[];
@@ -14,7 +14,7 @@ interface INetworkTableToolbar {
 }
 export const NetworkTableToolbar = ({ ...props }: INetworkTableToolbar) => {
     const { selected } = props;
-    const { handleConfirm, handleCancel, open, setOpen } = useNetworkTable({ setSelected: props.setSelected, selected });
+    const { handleConfirm, handleCancel, open, setOpen, isLoading } = useNetworkTableToolbar({ setSelected: props.setSelected, selected });
 
     return (
         <>
@@ -51,6 +51,7 @@ export const NetworkTableToolbar = ({ ...props }: INetworkTableToolbar) => {
                 setOpen={setOpen}
                 handleConfirm={handleConfirm}
                 handleCancel={handleCancel}
+                isLoading={isLoading}
             ></ConfirmationModal>
         </>
     );

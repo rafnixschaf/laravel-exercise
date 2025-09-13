@@ -9,12 +9,14 @@ interface IUseNetworkTable {
     setSelected: (select: number[]) => void;
     selected: readonly number[];
 }
-export const useNetworkTable = ({ ...props }: IUseNetworkTable) => {
+export const useNetworkTableToolbar = ({ ...props }: IUseNetworkTable) => {
     const { delete: formDelete, transform } = useForm({ ids: [] });
     const globalDispatch = useContext(GlobalDispatchContext);
     const [open, setOpen] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleDelete = (ids: readonly number[]): void => {
+        setIsLoading(true);
         transform(() => ({ ids }));
         formDelete('/networks', {
             onSuccess: (response) => {
@@ -25,6 +27,7 @@ export const useNetworkTable = ({ ...props }: IUseNetworkTable) => {
             onError: (e) => {
                 globalDispatch({ type: SET_STATUS_MESSAGE, payload: { message: getMessagesFromInertia(e), type: ERROR_STATUS } });
             },
+            onFinish: () => setIsLoading(false),
         });
     };
 
@@ -33,7 +36,9 @@ export const useNetworkTable = ({ ...props }: IUseNetworkTable) => {
         props.setSelected([]);
     };
 
-    const handleConfirm = () => {
+    const handleConfirm = (e: React.MouseEvent<HTMLButtonElement>) => {
+        //@TODO temporary fix
+        (e.currentTarget as HTMLButtonElement).blur();
         handleDelete(props.selected);
     };
 
@@ -42,5 +47,6 @@ export const useNetworkTable = ({ ...props }: IUseNetworkTable) => {
         handleConfirm,
         open,
         setOpen,
+        isLoading,
     };
 };
