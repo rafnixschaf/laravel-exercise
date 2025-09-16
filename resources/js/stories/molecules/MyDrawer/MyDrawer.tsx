@@ -2,8 +2,7 @@ import { logout } from '@/routes';
 import { useMyDrawer } from '@/stories/molecules/MyDrawer/myDrawerHook';
 import { Link } from '@inertiajs/react';
 import LogoutIcon from '@mui/icons-material/Logout';
-import MailIcon from '@mui/icons-material/Mail';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MapIcon from '@mui/icons-material/Map';
 import Box from '@mui/material/Box';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
@@ -13,6 +12,9 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import Toolbar from '@mui/material/Toolbar';
+import AssignmentIcon from '@mui/icons-material/Assignment';
+import reportController from '@/actions/App/Http/Controllers/ReportController';
+import networkController from '@/actions/App/Http/Controllers/NetworkController';
 
 const drawerWidth = 240;
 
@@ -31,14 +33,18 @@ export const MyDrawer = () => {
             <Toolbar />
             <Box sx={{ overflow: 'auto' }}>
                 <List>
-                    {['Dashboard', 'Reports'].map((text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
+                    <ListItem disablePadding>
+                        <ListItemButton component={Link} href={networkController.index().url}>
+                            <ListItemIcon><MapIcon /></ListItemIcon>
+                            <ListItemText primary={'Locations'} />
+                        </ListItemButton>
+                    </ListItem>
+                    <ListItem disablePadding>
+                        <ListItemButton component={Link} href={reportController.index().url}>
+                            <ListItemIcon><AssignmentIcon /></ListItemIcon>
+                            <ListItemText primary={'Reports'} />
+                        </ListItemButton>
+                    </ListItem>
                 </List>
                 <Divider />
                 <List>

@@ -7,6 +7,12 @@ export const MyButton = ({ children, onClick, ...props }: IMyButton) => {
         <Button
             color={props.color || 'primary'}
             variant="contained"
+            sx={{
+                "&.Mui-disabled": {
+                    backgroundColor: "primary.main",
+                    opacity: 0.5,
+                },
+            }}
             onClick={(e) => {
                 // blur trigger button to prevent focus inside aria-hidden region after opening modal
                 (e.currentTarget as HTMLButtonElement).blur();

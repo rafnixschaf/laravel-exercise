@@ -1,4 +1,4 @@
-import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { MyButton } from '@/stories/atoms/MyButton/MyButton';
 import { NetworkStatus } from '@/stories/atoms/NetworkStatus/NetworkStatus';
 import { useSetNetworkStatusForm } from '@/stories/molecules/forms/SaveNetworkInfoForm/setNetworkStatusFormHook';
 import { style } from '@/stories/molecules/forms/style/style';

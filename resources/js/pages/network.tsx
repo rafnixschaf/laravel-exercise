@@ -1,16 +1,50 @@
 import { MyAppLayout } from '@/layouts/app/AppLayout/MyAppLayout';
-import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { MyButton } from '@/stories/atoms/MyButton/MyButton';
 import { useGenerateReportForm } from '@/stories/molecules/forms/hooks/generateReportFormHook';
 import { ConfirmationModal } from '@/stories/molecules/modals/ConfirmationModal/ConfirmationModal';
 import { NetworkModal } from '@/stories/molecules/modals/NetworkModal/NetworkModal';
-import { NetworkTable } from '@/stories/molecules/tables/NetworkTable/NetworkTable';
 import { INetwork } from '@/types';
 import { Grid } from '@mui/material';
 import { useState } from 'react';
+import { IRows, MyTable } from '@/stories/molecules/tables/MyTable/MyTable';
+import { IHeadCell } from '@/stories/molecules/tables/MyTable/MyTableHead';
+import { formatDownloadSpeed } from '@/helper/formatter';
+import networkBulkController from '@/actions/App/Http/Controllers/NetworkBulkController';
 
 interface INetworkPage {
     networks: INetwork[];
 }
+
+const headCells: readonly IHeadCell[] = [
+    {
+        id: 'location',
+        numeric: false,
+        disablePadding: true,
+        label: 'Locations',
+    },
+    {
+        id: 'quality_score',
+        numeric: true,
+        disablePadding: false,
+        label: 'Quality',
+    },
+];
+
+type RowMap = {
+    location: string;
+    quality_score: number;
+};
+
+const rows: IRows<RowMap, 'location' | 'quality_score'> = [
+    {
+        key: 'location',
+    },
+    {
+        formatter: formatDownloadSpeed,
+        key: 'quality_score',
+    },
+];
+
 export default function Network({ networks }: INetworkPage) {
     const [openNetworkModal, setOpenNetworkModal] = useState(false);
     const [openReportModal, setOpenReportModal] = useState(false);
@@ -25,7 +59,7 @@ export default function Network({ networks }: INetworkPage) {
                 </Grid>
 
                 <Grid size={{ xs: 12 }}>
-                    <NetworkTable data={networks} />
+                    <MyTable data={networks} headCells={headCells} rows={rows} deleteUrl={networkBulkController.destroy().url}/>
                 </Grid>
 
                 <NetworkModal open={openNetworkModal} setOpen={setOpenNetworkModal} />
