@@ -22,6 +22,14 @@ The next commands will be called from the docker machine, so we first need the h
 `npm run dev` - start frontend  
 `npm run storybook` - start storybook  
 
+### Test User
+
+Since the registration does not work, a test user is created with `db:seed` with the following credentials  
+`test@example.com` and `TestPassword123`
+
+### Report Mail
+Update the receiver to get the report mail  
+`.env - REPORT_MAIL_RECEIVER=`
 
 ### Working Notes & Open Questions
 

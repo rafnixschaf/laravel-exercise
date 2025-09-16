@@ -24,7 +24,7 @@ class SendReportEmail
     public function handle(ReportGenerated $event): void
     {
         $report = $event->report->load('user', 'networks');
-        $to = 'saschatech@gmail.com';
+        $to = config('mail.receiver');
 
         if(!$to) {
             return;

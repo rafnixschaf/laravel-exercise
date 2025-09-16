@@ -113,4 +113,6 @@ return [
         'name' => env('MAIL_FROM_NAME', 'Example'),
     ],
 
+    'receiver' => env('REPORT_RECEIVER_EMAIL', 'test@example.com'),
+
 ];
