@@ -1,11 +1,11 @@
 import { useFormBasic } from '@/stories/molecules/forms/hooks/formBasicHook';
 import { useForm } from '@inertiajs/react';
 import reportController from '@/actions/App/Http/Controllers/ReportController';
-import { SET_STATUS_MESSAGE } from '@/context/globalContextReducer';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper/getMessagesFromInertia';
 import { ForwardedRef, useState } from 'react';
 import { IFormRef } from '@/types/IFormRef';
+import { SET_STATUS_MESSAGE } from '@/types/global/GlobalContextReducer';
 
 interface IUseGenerateReportModalForm {
     onSuccess?: () => void;

@@ -1,6 +1,7 @@
 import { IGlobalContext } from '@/types/IGlobalContext';
 import { createContext } from 'react';
-import { IGlobalAction } from '@/context/globalContextReducer';
+import { IGlobalAction } from '@/types/global/GlobalContextReducer';
+
 
 export const GlobalContext = createContext<IGlobalContext>({
     statusMessage: null,

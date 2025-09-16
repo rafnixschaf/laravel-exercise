@@ -1,9 +1,9 @@
 import { GlobalDispatchContext } from '@/context/GlobalContext';
-import { SET_STATUS_MESSAGE } from '@/context/globalContextReducer';
 import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper/getMessagesFromInertia';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
 import { useForm } from '@inertiajs/react';
 import { useContext, useState } from 'react';
+import { SET_STATUS_MESSAGE } from '@/types/global/GlobalContextReducer';
 
 interface IUseTable {
     setSelected: (select: number[]) => void;

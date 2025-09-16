@@ -1,7 +1,8 @@
 import { GlobalContext, GlobalDispatchContext } from '@/context/GlobalContext';
 import { SnackbarCloseReason } from '@mui/material/Snackbar';
 import { useContext} from 'react';
-import { REMOVE_STATUS_MESSAGE } from '@/context/globalContextReducer';
+import { REMOVE_STATUS_MESSAGE } from '@/types/global/GlobalContextReducer';
+
 
 export const useMySnackbar = () => {
     const { statusMessage } = useContext(GlobalContext);

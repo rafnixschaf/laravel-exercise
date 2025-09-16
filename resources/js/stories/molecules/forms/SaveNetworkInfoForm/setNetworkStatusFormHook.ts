@@ -1,5 +1,3 @@
-import { GlobalDispatchContext } from '@/context/GlobalContext';
-import { SET_STATUS_MESSAGE } from '@/context/globalContextReducer';
 import { getMessagesFromInertia, getMessagesFromInertiaResponse } from '@/helper/getMessagesFromInertia';
 import { INetworkStatus } from '@/stories/atoms/NetworkStatus/NetworkStatus';
 import { ERROR_STATUS, SUCCESS_STATUS } from '@/types/IStatusMessageTypes';
@@ -8,6 +6,7 @@ import { ForwardedRef, useImperativeHandle, useRef, useState } from 'react';
 import { useFormBasic } from '@/stories/molecules/forms/hooks/formBasicHook';
 import { IFormRef } from '@/types/IFormRef';
 import networkController from '@/actions/App/Http/Controllers/NetworkController';
+import { SET_STATUS_MESSAGE } from '@/types/global/GlobalContextReducer';
 
 interface IUseSetNetworkStatusForm {
     onSuccess?: () => void;
