@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\NetworkBulkController;
 use App\Http\Controllers\NetworkController;
+use App\Http\Controllers\ReportBulkController;
 use App\Http\Controllers\ReportController;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -32,14 +33,20 @@ Route::middleware('auth')
     });
 
 Route::middleware('auth')
-    ->prefix('report')
-    ->name('report.')
+    ->prefix('reports')
+    ->name('reports.')
     ->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('network');
-
-        })->name('index');
+        Route::get('/', [ReportController::class, 'index'])->name('index');
         Route::post('/', [ReportController::class, 'store'])->name('store');
     });
+
+
+Route::middleware('auth')
+    ->prefix('reports/bulk-report')
+    ->name('reports.bulk-report.')
+    ->group(function () {
+        Route::delete('/', [ReportBulkController::class, 'destroy'])->name('destroy');
+    });
+
 
 require __DIR__ . '/auth.php';
