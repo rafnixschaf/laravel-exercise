@@ -31,6 +31,17 @@ Since the registration does not work, a test user is created with `db:seed` with
 Update the receiver to get the report mail  
 `.env - REPORT_MAIL_RECEIVER=`
 
+
+### TODO
+- add tests
+- move global message handling to external store (like redux)
+- add registration
+- i18n
+- rename route/pages
+- add softdelete
+- resend a report
+- change relationship between reports and locations especially when we delete a location
+
 ### Working Notes & Open Questions
 
 **Type-safe reducer factory in TypeScript.**  
