@@ -2,7 +2,7 @@ import AuthenticatedSessionController from '@/actions/App/Http/Controllers/Auth/
 import { Form } from '@inertiajs/react';
 
 import { MyAuthLayout } from '@/layouts/MyAuthLayout';
-import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { MyButton } from '@/stories/atoms/MyButton/MyButton';
 import { Alert, Box, Checkbox, FormControlLabel, Paper, TextField, Typography } from '@mui/material';
 import Link from '@mui/material/Link';
 import Tooltip from '@mui/material/Tooltip';

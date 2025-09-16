@@ -47,6 +47,14 @@ export interface INetwork {
     location: string;
 }
 
+export interface IReport {
+    id: number;
+    created_at: string;
+    updated_at: string;
+    networks: INetwork[];
+    user_id: User['id'];
+}
+
 export interface IFlash {
     message: string;
     success: string;

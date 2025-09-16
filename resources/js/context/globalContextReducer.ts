@@ -1,33 +1,20 @@
 import { IGlobalContext } from '@/types/IGlobalContext';
-import { INFO_STATUS, IStatusMessageTypes } from '@/types/IStatusMessageTypes';
+import { INFO_STATUS } from '@/types/IStatusMessageTypes';
+import {
+    CLOSE_DRAWER,
+    IDrawerAction,
+    IGlobalAction,
+    IGlobalHandlerMap,
+    IGlobalReducer,
+    IHandler,
+    ISetDrawerAction,
+    ISetStatusMessageAction,
+    IStatusMessageAction,
+    OPEN_DRAWER,
+    REMOVE_STATUS_MESSAGE,
+    SET_STATUS_MESSAGE,
+} from '@/types/global/GlobalContextReducer';
 
-export const SET_STATUS_MESSAGE = 'SET_STATUS_MESSAGE' as const ;
-export const REMOVE_STATUS_MESSAGE = 'REMOVE_STATUS_MESSAGE' as const;
-
-export const OPEN_DRAWER = 'OPEN_DRAWER' as const;
-export const CLOSE_DRAWER = 'CLOSE_DRAWER' as const;
-
-type IDrawerAction = typeof OPEN_DRAWER | typeof CLOSE_DRAWER;
-type IStatusMessageAction = typeof SET_STATUS_MESSAGE | typeof REMOVE_STATUS_MESSAGE;
-
-
-type ISetStatusMessageAction = {
-    type: IStatusMessageAction;
-    payload?: { message: string; type: IStatusMessageTypes };
-};
-
-type ISetDrawerAction = {
-    type: IDrawerAction;
-};
-
-export type IGlobalAction = ISetStatusMessageAction | ISetDrawerAction;
-
-type IHandler<Action> = (state: IGlobalContext, action: Action) => IGlobalContext;
-
-type IGlobalReducer<Context, Action> = (state: Context, action: Action) => Context;
-type IGlobalHandlerMap<Context, Action extends IGlobalAction> = {
-    [T in Action["type"]]?: (state: Context, action: Extract<Action, { type: T }>) => Context;
-};
 
 const drawerHandler: Record<IDrawerAction, IHandler<ISetDrawerAction>> = {
     [OPEN_DRAWER]: (state) => ({ ...state, isDrawerOpen: true }),

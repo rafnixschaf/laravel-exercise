@@ -5,6 +5,7 @@ interface IMyAuthLayout {
 }
 export const MyAuthLayout = ({ ...props }: IMyAuthLayout) => {
     return (
+        //@TODO remove hardcoded color
         <Grid container component="main" sx={{ minHeight: '100vh', backgroundColor: '#1b5a59' }}>
             <Container maxWidth="xs" sx={{ py: 6, }}>
                 <Typography variant="h5" gutterBottom textAlign="center" mb={4} color="secondary.contrastText">

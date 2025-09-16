@@ -1,4 +1,4 @@
-import { MyButton } from '@/stories/atoms/Button/MyButton';
+import { MyButton } from '@/stories/atoms/MyButton/MyButton';
 import { style } from '@/stories/molecules/modals/ConfirmationModal/style';
 import { MyModal } from '@/stories/molecules/modals/MyModal/MyModal';
 import { Box, Grid, Stack, Typography } from '@mui/material';
